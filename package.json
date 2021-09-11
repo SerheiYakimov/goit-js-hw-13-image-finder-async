@@ -3,10 +3,10 @@
   "version": "1.1.0",
   "description": "",
   "main": "index.js",
-  "homepage": "https://serheiyakimov.github.io/goit-js-hw-13-image-finder",
+  "homepage": "https://serheiyakimov.github.io/goit-js-hw-13-image-finder-async",
   "scripts": {
     "dev": "parcel src/*.html",
-    "build": "parcel build src/*.html --public-url /goit-js-hw-13-image-finder/",
+    "build": "parcel build src/*.html --public-url /goit-js-hw-13-image-finder-async/",
     "deploy": "gh-pages -d dist",
     "predeploy": "npm run build"
   },
