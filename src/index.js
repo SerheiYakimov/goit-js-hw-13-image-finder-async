@@ -1,11 +1,11 @@
 
 import ImageApiService from './js/apiService';
 import galleryCardTps from './templates/gallery-card-tps.hbs';
-// import modalImage from './templates/modal-image.hbs';
 import { alert } from '../node_modules/@pnotify/core/dist/PNotify.js';
 import '@pnotify/core/dist/BrightTheme.css';
 import * as basicLightbox from 'basiclightbox';
-import '../node_modules/basiclightbox/dist/basicLightbox.min.css'
+import '../node_modules/basiclightbox/dist/basicLightbox.min.css';
+import {Pagination} from 'tui-pagination';
 import './sass/main.scss';
 
 
@@ -24,9 +24,11 @@ refs.moreBtn.addEventListener('click', onLoadMore);
 refs.upBtn.addEventListener('click', onScrollUp);
 
 
+
    
 const imageApiService = new ImageApiService();
 const hiddenElement = document.getElementById('more');
+
 
 
 
@@ -49,6 +51,8 @@ function onFetchImages(e) {
     imageApiService.fetchGallery().then(renderImages);
         
     refs.gallery.addEventListener('click', onShowFullImage);
+        
+    ShowPagination();
     
     refs.moreBtn.classList.replace('btn-hidden', 'btn-open');
     refs.upBtn.classList.replace('btn-hidden', 'btn-open');
@@ -65,13 +69,6 @@ function renderImages(hits) {
     
     
 }
-
-// function renderLargeImage(hits) {
-//     const markUpLargeImage = modalImage(hits);
-//     refs.gallery.insertAdjacentHTML('beforeend', markUpLargeImage);
-
-// }
-
 
 function clearGallery() {
     refs.gallery.innerHTML = '';
@@ -102,8 +99,6 @@ function onScrollUp() {
 
 
 
-// instance.show()
-
 function onShowFullImage(e) {
     e.preventDefault();
     console.log(e.target.nodeName);
@@ -117,6 +112,44 @@ function onShowFullImage(e) {
     const instance = basicLightbox.create(`<img src=${src} width="1280" height="600" />`);
     instance.show()
 }
+
+
+function ShowPagination() {
+    const Pagination = tui.Pagination;
+
+    const container = document.getElementById('pagination');
+    const options = { // below default value of options
+        totalItems: 10,
+        itemsPerPage: 10,
+        visiblePages: 10,
+        page: 1,
+        centerAlign: false,
+        firstItemClassName: 'tui-first-child',
+        lastItemClassName: 'tui-last-child',
+        template: {
+            page: '<a href="#" class="tui-page-btn">{{page}}</a>',
+            currentPage: '<strong class="tui-page-btn tui-is-selected">{{page}}</strong>',
+            moveButton:
+                '<a href="#" class="tui-page-btn tui-{{type}}">' +
+                    '<span class="tui-ico-{{type}}">{{type}}</span>' +
+                '</a>',
+            disabledMoveButton:
+                '<span class="tui-page-btn tui-is-disabled tui-{{type}}">' +
+                    '<span class="tui-ico-{{type}}">{{type}}</span>' +
+                '</span>',
+            moreButton:
+                '<a href="#" class="tui-page-btn tui-{{type}}-is-ellip">' +
+                    '<span class="tui-ico-ellip">...</span>' +
+                '</a>'
+     }
+};
+const pagination = new Pagination(container, options);
+
+});
+
+
+
+
 
 
 
