@@ -19,6 +19,10 @@ export default class ImageApiService {
         this.currentPage++;
     }
 
+    // decrementPage() {
+    //     this.currentPage--;
+    // }
+
     resetPage() {
         this.currentPage = 1;
     }

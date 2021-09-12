@@ -5,7 +5,7 @@ import { alert } from '../node_modules/@pnotify/core/dist/PNotify.js';
 import '@pnotify/core/dist/BrightTheme.css';
 import * as basicLightbox from 'basiclightbox';
 import '../node_modules/basiclightbox/dist/basicLightbox.min.css';
-import { Pagination } from 'tui-pagination';
+import Pagination from 'tui-pagination';
 // import { Pagination } from './js/pagination.js';
 import './sass/main.scss';
 
@@ -16,28 +16,37 @@ const refs = {
     input: document.querySelector('input'),
     moreBtn: document.querySelector('#more'),
     gallery: document.querySelector('.gallery'),
-    upBtn: document.querySelector('#up')
+    upBtn: document.querySelector('#up'),
+    pagination: document.querySelector('#tui-pagination-container'),
+    // pagBtnNext: document.querySelector('.tui-ico-next')
     
 }
 
 refs.form.addEventListener('submit', onFetchImages);
-refs.moreBtn.addEventListener('click', onLoadMore);
+// refs.moreBtn.addEventListener('click', onLoadMore);
 refs.upBtn.addEventListener('click', onScrollUp);
+refs.pagination.addEventListener('click', onClickTuiPageBtn);
+// refs.pagBtnNext.addEventListener('click', onNextPage);
 
-// myPagination.on('afterMove', (event) => {
-//         const currentPage = event.page;
-//         console.log(currentPage);
+// function onClickTuiPageBtn(e) {
+//     console.log(e.target);
+//     if (e.target.classList === '.tui-is-selected') {
+//         return
 //     }
-//     );
+//     if (e.target.classList === '.tui-ico-next') {
+//         imageApiService.fetchGallery().then(renderImages);
+//     }
 
-// myPagination.on('beforeMove', (event) => {
-//         const currentPage = event.page;
+// }
 
-//         if (currentPage === 10) {
-//             return false;
-//             // return true;
-//         }
-//     });
+
+function onClickTuiPageBtn(e) {
+//     if(e.target.nodeName === )
+    console.log(e.target);
+}
+
+
+
 
 
 
@@ -45,33 +54,27 @@ refs.upBtn.addEventListener('click', onScrollUp);
 const imageApiService = new ImageApiService();
 const hiddenElement = document.getElementById('more');
 const container = document.getElementById('tui-pagination-container');
-const options = { // below default value of options
-    totalItems: 10,
-    itemsPerPage: 10,
-    visiblePages: 10,
-    page: 1,
-    centerAlign: false,
-    firstItemClassName: 'tui-first-child',
-    lastItemClassName: 'tui-last-child',
-    template: {
-        page: '<a href="#" class="tui-page-btn">{{page}}</a>',
-        currentPage: '<strong class="tui-page-btn tui-is-selected">{{page}}</strong>',
-        moveButton:
-            '<a href="#" class="tui-page-btn tui-{{type}}">' +
-            '<span class="tui-ico-{{type}}">{{type}}</span>' +
-            '</a>',
-        disabledMoveButton:
-            '<span class="tui-page-btn tui-is-disabled tui-{{type}}">' +
-            '<span class="tui-ico-{{type}}">{{type}}</span>' +
-            '</span>',
-        moreButton:
-            '<a href="#" class="tui-page-btn tui-{{type}}-is-ellip">' +
-            '<span class="tui-ico-ellip">...</span>' +
-            '</a>'
-    }
-};
+const myPagination = new Pagination(container, {
+        totalItems: 500,
+        itemsPerPage: 12,
+        visiblePages: 5,
+        // centerAlign: true
+    });
 
-const myPagination = new Pagination(container, options);
+
+
+//     // переходит на страницу x
+// myPagination.movePageTo (targetPage);
+
+// // сбрасывает пагинацию
+// myPagination.reset (totalItems);
+
+// // устанавливает количество элементов на странице
+// myPagination.gsetItemsPerPage (itemCount);
+
+// // устанавливает общее количество элементов
+// myPagination.setTotalItems (itemCount);
+
 
 
 function onFetchImages(e) {
@@ -92,10 +95,14 @@ function onFetchImages(e) {
     imageApiService.fetchGallery().then(renderImages);
         
     refs.gallery.addEventListener('click', onShowFullImage);
-        
-    ShowPagination();
     
-    refs.moreBtn.classList.replace('btn-hidden', 'btn-open');
+    
+    // myPagination.getCurrentPage(this.curretnPage);
+    // console.log( myPagination.getCurrentPage);
+    refs.pagination.classList.replace('pag-hidden', 'pag-open')  
+   
+    
+    // refs.moreBtn.classList.replace('btn-hidden', 'btn-open');
     refs.upBtn.classList.replace('btn-hidden', 'btn-open');
     }
     
@@ -113,13 +120,14 @@ function renderImages(hits) {
 
 function clearGallery() {
     refs.gallery.innerHTML = '';
-    refs.moreBtn.classList.replace('btn-open', 'btn-hidden');
+    // refs.moreBtn.classList.replace('btn-open', 'btn-hidden');
+    refs.pagination.classList.replace('pag-open', 'pag-hidden') 
 }
 
-function onLoadMore() {
-    imageApiService.fetchGallery().then(renderImages);
+// function onLoadMore() {
+//     imageApiService.fetchGallery().then(renderImages);   
           
-}
+// }
 
 
 function showScroll() {
@@ -155,14 +163,6 @@ function onShowFullImage(e) {
 }
 
 
-function ShowPagination() {
-    // const Pagination = tui.Pagination;
-    // const myPagination = new Pagination(container, {
-    //         totalItems: 500,
-    //         itemsPerPage: 10,
-    //         visiblePages: 5,
-    //         centerAlign: true
-    // });
 
     
 
@@ -173,25 +173,7 @@ function ShowPagination() {
     
    
 
-        // gets the current page
-    myPagination.getCurrentPage();
-
-    // goes to page x
-    myPagination.movePageTo(targetPage);
-
-    // resets the pagination
-    myPagination.reset(totalItems);
-
-    // sets the number of items per page
-    myPagination.gsetItemsPerPage(itemCount);
-
-    // sets the total number of items
-    myPagination.setTotalItems(itemCount);
-
-
-
-
-};
+   
 
 
 
