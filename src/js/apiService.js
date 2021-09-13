@@ -10,7 +10,7 @@ export default class ImageApiService {
     .then(result => {
         this.incrementPage();
         console.log(this);    
-        return result.hits;    
+        return result;    
     })
    
     }
@@ -19,9 +19,9 @@ export default class ImageApiService {
         this.currentPage++;
     }
 
-    // decrementPage() {
-    //     this.currentPage--;
-    // }
+    decrementPage() {
+        this.currentPage--;
+    }
 
     resetPage() {
         this.currentPage = 1;
