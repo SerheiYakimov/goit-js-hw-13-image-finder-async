@@ -33,7 +33,7 @@ refs.pagination.addEventListener('click', onLoadPage);
 
 function onLoadPage(e) {
 
-    options.page = imageApiService.currentPage - 1;
+    options.page = imageApiService.currentPage;
     console.log(options.page)
     if (e.target === options.page) {
         return
@@ -46,10 +46,7 @@ function onLoadPage(e) {
     }
     
     console.log(e.target);
-    // console.log(getCurrentPage ());
-    // console.log(myPagination.movePageTo (targetPage));
-    // const targetPage = e.target;
-    // console.log(targetPage)
+    
 }
 
 
